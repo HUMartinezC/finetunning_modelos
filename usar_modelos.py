@@ -1,4 +1,4 @@
-from transformers import pipeline
+from transformers import AutoImageProcessor, pipeline
 from PIL import Image
 
 
@@ -68,10 +68,15 @@ def inferencia_texto():
 
 
 def inferencia_imagen():
+    image_processor = AutoImageProcessor.from_pretrained(
+        "./mi_modelo_vit_cifar10",
+        use_fast=False,
+    )
+
     clasificador_img = pipeline(
         "image-classification",
         model="./mi_modelo_vit_cifar10",
-        image_processor="./mi_modelo_vit_cifar10",
+        image_processor=image_processor,
     )
 
     imagenes = {
